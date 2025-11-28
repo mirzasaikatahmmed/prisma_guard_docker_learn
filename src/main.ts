@@ -17,14 +17,14 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Prisma Guard Docker Learn')
+    .setDescription('The Prisma Guard Docker Learn API description')
     .setVersion('1.0')
-    .addTag('cats')
+    .addTag('Rest API')
     .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory, {
+  SwaggerModule.setup('api-docs', app, documentFactory, {
     swaggerOptions: {
       persistAuthorization: true,
     },
@@ -32,6 +32,6 @@ async function bootstrap() {
 
   const port = process.env.PORT! || 3000;
   await app.listen(process.env.PORT ?? port);
-  console.log(`the server running at http://localhost:${port}/api`);
+  console.log(`the server running at http://localhost:${port}/api-docs`);
 }
 bootstrap();
