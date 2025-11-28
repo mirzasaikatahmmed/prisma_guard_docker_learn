@@ -4,8 +4,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from '@/common/guards/roles.guard';
-import { Roles } from '@/common/decorators/roles.decorator';
+import { RoleGuard } from '@/common/guards/role.guard';
+import { Roles } from '@/common/decorators/role.decorator';
+import { Role } from 'generated/prisma/enums';
 
 @Controller('users')
 export class UsersController {
@@ -17,13 +18,12 @@ export class UsersController {
   }
   
   @ApiBearerAuth()
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN')
+  @UseGuards(AuthGuard('jwt'), RoleGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
-
 
   @ApiBearerAuth()
   @Get(':id')

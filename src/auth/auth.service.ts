@@ -12,6 +12,21 @@ const jwt = require('jsonwebtoken');
 
 @Injectable()
 export class AuthService {
+  async findUser(identifier: string | number | any) {
+    if (!identifier) return null;
+    const prismaClient = this.prisma.client;
+    try {
+      const byId = await prismaClient.user.findUnique({ where: { id: identifier as any } as any });
+      if (byId) return byId;
+    } catch (e) {
+    }
+    try {
+      const byEmail = await prismaClient.user.findUnique({ where: { email: identifier as any } as any });
+      return byEmail;
+    } catch (e) {
+      return null;
+    }
+  }
   constructor(
     private readonly prisma: PrismaService
   ) {}
@@ -53,8 +68,8 @@ export class AuthService {
     if (!valid) throw new UnauthorizedException('Invalid credentials');
 
     const secret = process.env.JWT_SECRET || 'change_this_secret';
-    const token = jwt.sign({ sub: user.id, email: user.email, role: user.role }, secret, {
-      expiresIn: '1h',
+    const token = jwt.sign({ sub: user.id, email: user.email, role: [user.role] }, secret, {
+      expiresIn: '24h',
     });
 
     return {
@@ -66,5 +81,29 @@ export class AuthService {
         role: user.role,
       },
     };
+  }
+
+  async validateUser(details: { email: string; displayName: string }) {
+    console.log('AuthService');
+    console.log(details);
+    const user = await this.prisma.client.user.findUnique({ where: { email: details.email } });
+    console.log(user);
+    if (user) return user;
+    console.log('User not found. Creating...');
+    try {
+      const randomPassword = Math.random().toString(36).slice(2);
+      const hashedPassword = await bcrypt.hash(randomPassword, 10);
+      const newUser = await this.prisma.client.user.create({
+        data: {
+          name: details.displayName || 'Google User',
+          email: details.email,
+          password: hashedPassword,
+        },
+      });
+      return newUser;
+    } catch (err) {
+      console.error('Error creating user from Google profile', err);
+      throw new InternalServerErrorException('Failed to create user');
+    }
   }
 }
