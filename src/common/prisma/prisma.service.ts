@@ -7,6 +7,7 @@ import { PrismaClient } from 'generated/prisma/client';
 @Injectable()
 export class PrismaService implements OnModuleInit {
   private readonly prisma: PrismaClient;
+  user: any;
 
   constructor() {
     const adapter = new PrismaPg({
@@ -18,7 +19,7 @@ export class PrismaService implements OnModuleInit {
 
   async onModuleInit() {
     await this.prisma.$connect();
-    console.log('database is connected');
+    console.log('✅ Database is connected 🚀');
   }
 
   get client() {
