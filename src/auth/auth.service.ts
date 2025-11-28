@@ -53,7 +53,7 @@ export class AuthService {
     if (!valid) throw new UnauthorizedException('Invalid credentials');
 
     const secret = process.env.JWT_SECRET || 'change_this_secret';
-    const token = jwt.sign({ sub: user.id, email: user.email }, secret, {
+    const token = jwt.sign({ sub: user.id, email: user.email, role: user.role }, secret, {
       expiresIn: '1h',
     });
 
