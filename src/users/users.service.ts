@@ -30,8 +30,13 @@ export class UsersService {
     }
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    try {
+      const prismaClient = this.prisma.client;
+      return await prismaClient.user.findMany();
+    } catch (error) {
+      throw new Error(`Failed to fetch users: ${error?.message ?? error}`);
+    }
   }
 
   findOne(id: number) {
