@@ -4,8 +4,9 @@ import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from '../common/strategies/jwt.strategy';
 import { RoleGuard } from '@/common/guards/role.guard';
-import { GoogleStrategy } from './lib/GoogleStrategy';
 import { SessionSerializer } from './lib/serializer';
+import { TwitterStrategy } from './lib/twitter.strategy';
+import { GoogleStrategy } from './lib/google.strategy';
 
 @Module({
   imports: [PassportModule.register({ defaultStrategy: 'jwt' })],
@@ -17,6 +18,7 @@ import { SessionSerializer } from './lib/serializer';
       provide: 'AUTH_SERVICE',
       useClass: AuthService,
     },
+    TwitterStrategy
   ],
   exports: [PassportModule],
 })

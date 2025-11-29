@@ -36,9 +36,15 @@ export class AuthService {
     if (!dto.email || !dto.password || !dto.name) {
       throw new BadRequestException('Name, email and password are required');
     }
+
+    const email = dto.email.trim().toLowerCase();
+    if (!/^[^@]+@gmail\.com$/.test(email)) {
+      throw new BadRequestException('Only @gmail.com addresses are allowed');
+    }
+
     const prismaClient = this.prisma.client;
     const existingUser = await prismaClient.user.findUnique({
-      where: { email: dto.email },
+      where: { email },
     });
     if (existingUser) {
       throw new BadRequestException('Email already in use');
@@ -49,6 +55,7 @@ export class AuthService {
         data: {
           name: dto.name,
           email: dto.email,
+          username: dto.email.replace(/@gmail\.com$/i, ''),
           password: hashedPassword,
           loginType: 'EMAIL',
         },
@@ -105,6 +112,32 @@ export class AuthService {
       return newUser;
     } catch (err) {
       console.error('Error creating user from Google profile', err);
+      throw new InternalServerErrorException('Failed to create user');
+    }
+  }
+
+  async validateTwitterUser(details: { username: string; displayName: string; accessToken: string; refreshToken: string }) {
+    console.log('AuthService - Twitter');
+    console.log(details);
+    const user = await this.prisma.client.user.findUnique({ where: { username: details.username } });
+    console.log(user);
+    if (user) return user;
+    console.log('User not found. Creating Twitter user...');
+    try {
+      const randomPassword = Math.random().toString(36).slice(2);
+      const hashedPassword = await bcrypt.hash(randomPassword, 10);
+      const newUser = await this.prisma.client.user.create({
+        data: {
+          name: details.displayName || 'Twitter User',
+          username: details.username,
+          email: `${details.username}@twitter.com`,
+          password: hashedPassword,
+          loginType: 'TWITTER',
+        },
+      });
+      return newUser;
+    } catch (err) {
+      console.error('Error creating user from Twitter profile', err);
       throw new InternalServerErrorException('Failed to create user');
     }
   }

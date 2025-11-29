@@ -19,7 +19,8 @@ export type Role = (typeof Role)[keyof typeof Role]
 
 export const LoginType = {
   EMAIL: 'EMAIL',
-  GOOGLE: 'GOOGLE'
+  GOOGLE: 'GOOGLE',
+  TWITTER: 'TWITTER'
 } as const
 
 export type LoginType = (typeof LoginType)[keyof typeof LoginType]

@@ -62,4 +62,17 @@ export class AuthController {
       return { msg: 'Not Authenticated' };
     }
   }
+
+  @Get('twitter')
+  @UseGuards(AuthGuard('twitter'))
+  twitterLogin() {
+    return;
+  }
+
+  @Get('twitter/callback')
+  @UseGuards(AuthGuard('twitter'))
+  twitterCallback(@Req() req: Request & { user?: any }) {
+    console.log('Authenticated Twitter User:', req.user);
+    return req.user;
+  }
 }

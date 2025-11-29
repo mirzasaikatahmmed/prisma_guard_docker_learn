@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsEmail, IsOptional } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsString, IsEmail, IsOptional, Matches } from "class-validator";
 
 export class CreateUserDto {
 
@@ -7,9 +8,15 @@ export class CreateUserDto {
     @IsString()
     name: string;
 
-    @ApiProperty({ example: "email@example.com" })
+    @ApiProperty({ example: "user@gmail.com" })
     @IsEmail()
+    @Matches(/^[A-Za-z0-9._%+-]+@gmail\.com$/i, { message: "Only @gmail.com addresses are allowed" })
     email: string;
+    
+    @ApiProperty({ example: "johndoe" })
+    @IsString()
+    @Transform(({ obj }) => (typeof obj?.email === 'string' ? obj.email.replace(/@gmail\.com$/i, '') : obj?.username))
+    username: string;
 
     @ApiProperty({ example: "password123" })
     @IsString()
