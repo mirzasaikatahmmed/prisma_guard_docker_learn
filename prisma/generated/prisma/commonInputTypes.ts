@@ -54,6 +54,13 @@ export type EnumRoleFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
 }
 
+export type EnumLoginTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.LoginType | Prisma.EnumLoginTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.LoginType[] | Prisma.ListEnumLoginTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LoginType[] | Prisma.ListEnumLoginTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLoginTypeFilter<$PrismaModel> | $Enums.LoginType
+}
+
 export type DateTimeFilter<$PrismaModel = never> = {
   equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel>
@@ -73,6 +80,16 @@ export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumRoleFilter<$PrismaModel>
   _max?: Prisma.NestedEnumRoleFilter<$PrismaModel>
+}
+
+export type EnumLoginTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LoginType | Prisma.EnumLoginTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.LoginType[] | Prisma.ListEnumLoginTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LoginType[] | Prisma.ListEnumLoginTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLoginTypeWithAggregatesFilter<$PrismaModel> | $Enums.LoginType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLoginTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLoginTypeFilter<$PrismaModel>
 }
 
 export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -138,6 +155,13 @@ export type NestedEnumRoleFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
 }
 
+export type NestedEnumLoginTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.LoginType | Prisma.EnumLoginTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.LoginType[] | Prisma.ListEnumLoginTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LoginType[] | Prisma.ListEnumLoginTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLoginTypeFilter<$PrismaModel> | $Enums.LoginType
+}
+
 export type NestedDateTimeFilter<$PrismaModel = never> = {
   equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel>
@@ -157,6 +181,16 @@ export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumRoleFilter<$PrismaModel>
   _max?: Prisma.NestedEnumRoleFilter<$PrismaModel>
+}
+
+export type NestedEnumLoginTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LoginType | Prisma.EnumLoginTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.LoginType[] | Prisma.ListEnumLoginTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LoginType[] | Prisma.ListEnumLoginTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLoginTypeWithAggregatesFilter<$PrismaModel> | $Enums.LoginType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLoginTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLoginTypeFilter<$PrismaModel>
 }
 
 export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {

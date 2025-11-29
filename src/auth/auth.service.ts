@@ -50,6 +50,7 @@ export class AuthService {
           name: dto.name,
           email: dto.email,
           password: hashedPassword,
+          loginType: 'EMAIL',
         },
       });
       return user;
@@ -98,6 +99,7 @@ export class AuthService {
           name: details.displayName || 'Google User',
           email: details.email,
           password: hashedPassword,
+          loginType: 'GOOGLE',
         },
       });
       return newUser;
