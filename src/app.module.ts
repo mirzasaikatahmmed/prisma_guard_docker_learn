@@ -5,10 +5,12 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './common/prisma/prisma.module';
 import { UsersModule } from './users/users.module';
 import { PassportModule } from '@nestjs/passport';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [AuthModule, UsersModule, PrismaModule,
     PassportModule.register({ session: true }),
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

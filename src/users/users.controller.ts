@@ -18,7 +18,7 @@ export class UsersController {
   }
   
   @ApiBearerAuth()
-  @Roles('ADMIN')
+  @Roles(Role.ADMIN)
   @UseGuards(AuthGuard('jwt'), RoleGuard)
   @Get()
   findAll() {
@@ -26,6 +26,8 @@ export class UsersController {
   }
 
   @ApiBearerAuth()
+  @Roles(Role.ADMIN)
+  @UseGuards(AuthGuard('jwt'), RoleGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const user = await this.usersService.findOne(id);
@@ -35,12 +37,15 @@ export class UsersController {
   }
 
   @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
 
   @ApiBearerAuth()
+  @Roles(Role.ADMIN)
+  @UseGuards(AuthGuard('jwt'), RoleGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);

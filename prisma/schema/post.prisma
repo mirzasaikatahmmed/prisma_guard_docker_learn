@@ -1,4 +1,8 @@
 model Post{
   id    String @unique @default(cuid())
   title String
+  body  String
+  published Boolean @default(false)
+  author User @relation(fields: [authorId], references: [id])
+  authorId String
 }
