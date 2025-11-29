@@ -44,8 +44,12 @@ export class AuthController {
 
   @Get('google/redirect')
   @UseGuards(GoogleAuthGuard)
-  handleRedirect() {
-    return { msg: 'OK' };
+  handleRedirect(@Req() req: Request & { user?: any }) {
+    const responseMessage = 'Google Authentication Successful';
+    return {
+      msg: responseMessage,
+      user: req.user
+    };
   }
 
   @Get('status')
